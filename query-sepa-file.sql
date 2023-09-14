@@ -2,7 +2,7 @@ SELECT
 XMLElement("Document",
            XMLAttributes('urn:iso:std:iso:20022:tech:xsd:pain.001.001.03' AS "xmlns",
                          'http://www.w3.org/2001/XMLSchema-instance' AS "xmlns:xsi",
-                         'http://www.oracle.com/Employee.xsd' AS "xsi:schemaLocation"
+                         'urn:iso:std:iso:20022:tech:xsd:pain.001.001.03'||chr(32)||'pain.001.001.03.xsd' AS "xsi:schemaLocation"
                         ),
            XMLElement("CstmrCdtTrfInitn",
                      ----- Head ------------------
@@ -26,16 +26,18 @@ XMLElement("Document",
                                                     )
                                          ),
                                XMLElement("ReqdExctnDt", to_char(sysdate, 'yyyy-mm-dd')),
-                               XMLElement("Dbtr", x.debtor_name),
+                               XMLElement("Dbtr", 
+                                          XMLElement("Nm", x.debtor_name)
+                                          ),
                                XMLElement("DbtrAcct",
                                           XMLElement("Id",
-                                                    XMLElement("IBAN", NULL)
+                                                    XMLElement("IBAN", x.debtor_iban)
                                                     ),
                                           XMLElement("Ccy", x.currency)
                                          ),
                               XMLElement("DbtrAgt",
                                          XMLElement("FinInstnId",
-                                                    XMLElement("BIC", NULL)
+                                                    XMLElement("BIC", x.debtor_bic)
                                                    )
                                         ),
                               XMLElement("ChrgBr", 'SLEV'),

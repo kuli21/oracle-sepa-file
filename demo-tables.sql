@@ -5,6 +5,8 @@ CREATE TABLE sepa_deb_data
 (
   id          NUMBER(20),
   debtor_name VARCHAR2(127),
+  debtor_iban VARCHAR2(27),
+  debtor_bic  VARCHAR2(27),
   transfer_id VARCHAR2(50),
   currency    VARCHAR2(4)
 );
@@ -29,8 +31,8 @@ COMMENT ON TABLE sepa_cred_data IS 'This table contains each creditor with bank 
 -----------------------------------------------------------
 -- Create demo data----------------------------------------
 -----------------------------------------------------------
-INSERT INTO sepa_deb_data  (id, debtor_name, transfer_id, currency) 
-                    VALUES (1, 'Dream Industries', 'DI23', 'EUR');
+INSERT INTO sepa_deb_data  (id, debtor_name, debtor_iban, debtor_bic, transfer_id, currency) 
+                    VALUES (1, 'Dream Industries', 'DE1200000000000000001', 'BANKXXX123', 'DI23', 'EUR');
 INSERT INTO sepa_cred_data (id, client_id, accountholder, iban, bic, amount, reason_for_transfer, deb_data_id)
                     VALUES (1, 'CL043', 'Major Max', 'LI15088110605699K002E', 'BFRILI22', 42.69, 'Parking fee', 1);
 INSERT INTO sepa_cred_data (id, client_id, accountholder, iban, bic, amount, reason_for_transfer, deb_data_id)
